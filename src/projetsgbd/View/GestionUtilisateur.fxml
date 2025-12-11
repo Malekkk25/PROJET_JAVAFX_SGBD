@@ -33,26 +33,30 @@
 
             <!-- Navigation Tabs -->
             <HBox spacing="12" alignment="CENTER_LEFT" styleClass="nav-bar">
-                <HBox spacing="10" alignment="CENTER"
-                      styleClass="nav-tab nav-tab-active"
-                      onMouseClicked="#versGestionUtilisateurs">
-                    <Label text="👥" styleClass="nav-icon"/>
-                    <Label text="Gestion des Utilisateurs" styleClass="nav-label"/>
-                </HBox>
+               <!-- Onglet Gestion Utilisateurs -->
+<HBox fx:id="tabUsers" spacing="10" alignment="CENTER"
+      styleClass="nav-tab nav-tab-active"
+      onMouseClicked="#versGestionUtilisateurs">
+    <Label text="👥" styleClass="nav-icon"/>
+    <Label text="Gestion des Utilisateurs" styleClass="nav-label"/>
+</HBox>
 
-                <HBox spacing="10" alignment="CENTER"
-                      styleClass="nav-tab"
-                      onMouseClicked="#versGestionCommandes">
-                    <Label text="🛒" styleClass="nav-icon"/>
-                    <Label text="Gestion des Commandes" styleClass="nav-label"/>
-                </HBox>
+<!-- Onglet Gestion Commandes -->
+<HBox fx:id="tabCommandes" spacing="10" alignment="CENTER"
+      styleClass="nav-tab"
+      onMouseClicked="#versGestionCommandes">
+    <Label text="🛒" styleClass="nav-icon"/>
+    <Label text="Gestion des Commandes" styleClass="nav-label"/>
+</HBox>
 
-                <HBox spacing="10" alignment="CENTER"
-                      styleClass="nav-tab"
-                      onMouseClicked="#versGestionLivraisons">
-                    <Label text="🚚" styleClass="nav-icon"/>
-                    <Label text="Gestion des Livraisons" styleClass="nav-label"/>
-                </HBox>
+<!-- Onglet Gestion Livraisons -->
+<HBox fx:id="tabLivraisons" spacing="10" alignment="CENTER"
+      styleClass="nav-tab"
+      onMouseClicked="#versGestionLivraisons">
+    <Label text="🚚" styleClass="nav-icon"/>
+    <Label text="Gestion des Livraisons" styleClass="nav-label"/>
+</HBox>
+
             </HBox>
 
         </VBox>
@@ -174,7 +178,7 @@
                 <!-- ========== TABLE CARD ========== -->
                 <VBox spacing="22" styleClass="card table-card">
                     
-                    <!-- Card Header -->
+                   <!-- Card Header -->
                     <HBox spacing="15" alignment="CENTER_LEFT" styleClass="card-header">
                         <StackPane styleClass="card-icon-container">
                             <Label text="📋" styleClass="card-icon"/>
@@ -192,16 +196,25 @@
                     <Separator styleClass="card-separator"/>
 
                     <!-- Table -->
+                    <!-- Barre de recherche -->
+ <!--  <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 0 0 10 0;">
+    <Label text="Rechercher :" styleClass="field-label"/>
+    <TextField fx:id="searchField"
+               promptText="Nom ou login..."
+               styleClass="field-input"
+               onKeyReleased="#handleSearch"/>
+</HBox>-->
+
                     <TableView fx:id="usersTable" 
                                prefHeight="420"
                                styleClass="modern-table">
                         <columns>
                             <TableColumn fx:id="colLogin" text="Login" prefWidth="130" styleClass="col-login"/>
-                            <TableColumn fx:id="colNomPrenom" text="Nom &amp; Prénom" prefWidth="200" styleClass="col-name"/>
-                            <TableColumn fx:id="colPoste" text="Poste" prefWidth="150" styleClass="col-poste"/>
+                            <TableColumn fx:id="colNomPrenom" text="Nom &amp; Prénom" prefWidth="150" styleClass="col-name"/>
+                            <TableColumn fx:id="colPoste" text="Poste" prefWidth="100" styleClass="col-poste"/>
                             <TableColumn fx:id="colTel" text="Téléphone" prefWidth="150" styleClass="col-tel"/>
                             <TableColumn fx:id="colDateEmbauche" text="Date Embauche" prefWidth="140" styleClass="col-date"/>
-                            <TableColumn fx:id="colActions" text="Actions" prefWidth="130" styleClass="col-actions"/>
+                            <TableColumn fx:id="colActions" text="Actions" prefWidth="400" styleClass="col-actions"/>
                         </columns>
                         <placeholder>
                             <VBox spacing="15" alignment="CENTER" style="-fx-padding: 40;">

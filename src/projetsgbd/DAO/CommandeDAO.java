@@ -113,7 +113,7 @@ public class CommandeDAO {
     // ================= HELPER METHODS (SQL Direct pour UI) =================
 
     private String getNomClient(int noclt) {
-        String sql = "SELECT NOMCLT FROM projetsgbd.CLIENTS WHERE NOCLT = ?";
+        String sql = "SELECT NOMCLT FROM CLIENTS WHERE NOCLT = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, noclt);
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -127,7 +127,7 @@ public class CommandeDAO {
 
     public ObservableList<String> chargerClients() throws SQLException {
         ObservableList<String> clients = FXCollections.observableArrayList();
-        String sql = "SELECT NOCLT, NOMCLT FROM projetsgbd.CLIENTS ORDER BY NOMCLT";
+        String sql = "SELECT NOCLT, NOMCLT FROM CLIENTS ORDER BY NOCLT ";
         try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 clients.add(rs.getInt("NOCLT") + " - " + rs.getString("NOMCLT"));
@@ -138,7 +138,7 @@ public class CommandeDAO {
 
     public ObservableList<String> chargerArticles() throws SQLException {
         ObservableList<String> articles = FXCollections.observableArrayList();
-        String sql = "SELECT REFART, DESIGNATION, PRIX FROM projetsgbd.ARTICLES ORDER BY DESIGNATION";
+        String sql = "SELECT REFART, DESIGNATION, PRIX FROM ARTICLES ORDER BY REFART";
         try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 articles.add(rs.getInt("REFART") + " - " + rs.getString("DESIGNATION") + " (" + rs.getDouble("PRIX") + " DT)");

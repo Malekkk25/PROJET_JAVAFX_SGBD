@@ -32,26 +32,33 @@ stylesheets="@style.css"  >
                 </HBox>
 
                 <Separator styleClass="header-separator"/>
-
+ <HBox spacing="12" alignment="CENTER_LEFT" styleClass="nav-bar">
                 <!-- Navigation Tabs -->
-                <HBox spacing="12" alignment="CENTER_LEFT" styleClass="nav-bar" >
-                    <HBox spacing="10" alignment="CENTER" styleClass="nav-tab" onMouseClicked="#versGestionUtilisateurs">
-                        <Label text="👥" styleClass="nav-icon"/>
-                        <Label text="Gestion des Utilisateurs" styleClass="nav-label"/>
-                    </HBox>
-                    
-                    
-                  
-                    
-                    <HBox spacing="10" alignment="CENTER" styleClass="nav-tab" onMouseClicked="#versGestionCommandes">
-                        <Label text="🛒" styleClass="nav-icon"/>
-                        <Label text="Gestion des Commandes" styleClass="nav-label"/>
-                    </HBox>
-                    
-                    <HBox spacing="10" alignment="CENTER" styleClass="nav-tab nav-tab-active" onMouseClicked="#versGestionLivraisons">
-                        <Label text="🚚" styleClass="nav-icon"/>
-                        <Label text="Gestion des Livraisons" styleClass="nav-label"/>
-                    </HBox>
+               <!-- Onglet Gestion Utilisateurs -->
+<HBox fx:id="tabUsers" spacing="10" alignment="CENTER"
+       styleClass="nav-tab"
+      onMouseClicked="#versGestionUtilisateurs">
+    <Label text="👥" styleClass="nav-icon"/>
+    <Label text="Gestion des Utilisateurs" styleClass="nav-label"/>
+</HBox>
+
+<!-- Onglet Gestion Commandes -->
+<HBox fx:id="tabCommandes" spacing="10" alignment="CENTER"
+      styleClass="nav-tab"
+      onMouseClicked="#versGestionCommandes">
+    <Label text="🛒" styleClass="nav-icon"/>
+    <Label text="Gestion des Commandes" styleClass="nav-label"/>
+</HBox>
+
+<!-- Onglet Gestion Livraisons -->
+<HBox fx:id="tabLivraisons" spacing="10" alignment="CENTER"
+     
+      styleClass="nav-tab nav-tab-active"
+      onMouseClicked="#versGestionLivraisons">
+    <Label text="🚚" styleClass="nav-icon"/>
+    <Label text="Gestion des Livraisons" styleClass="nav-label"/>
+
+</HBox>
              </HBox>
             </VBox>
         </VBox>

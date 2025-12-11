@@ -39,7 +39,11 @@ public class GestionCommandesController {
     @FXML private TableColumn<Commande, String> colEtat;
     @FXML private TableColumn<Commande, Number> colMontant;
     @FXML private TableColumn<Commande, Void> colActions;
-    
+    @FXML private HBox tabUsers;
+@FXML private HBox tabCommandes;
+@FXML private HBox tabLivraisons;
+@FXML private TextField searchField;
+
     @FXML private Label lblCommandesCount;
 
     private CommandeDAO commandeDAO;
@@ -47,6 +51,7 @@ public class GestionCommandesController {
     private final Map<Integer, Integer> panier = new HashMap<>(); 
 
     public void initializeData(CommandeDAO dao) {
+        
         this.commandeDAO = dao;
         chargerListesDeroulantes();
         refreshData();
@@ -120,6 +125,7 @@ public class GestionCommandesController {
              dpDateCommande.setValue(LocalDate.now());
              dpDateCommande.setDisable(true);
         }
+        
     }
 
     private void chargerListesDeroulantes() {
@@ -319,6 +325,28 @@ private void versGestionUtilisateurs(MouseEvent event) {
         e.printStackTrace();
         afficherAlerte("Erreur Navigation", "Erreur Utilisateur : " + e.getMessage(), Alert.AlertType.ERROR);
     }
+}
+
+@FXML
+private void handleSearch() {
+    String critere = (searchField.getText() == null) ? "" : searchField.getText().trim().toUpperCase();
+
+    if (critere.isEmpty()) {
+        // recharger toutes les commandes depuis la BD
+        refreshData();
+        return;
+    }
+
+    // filtre en mémoire sur dataCommandes
+    ObservableList<Commande> filtered = FXCollections.observableArrayList();
+    for (Commande c : dataCommandes) {
+        String num = String.valueOf(c.getNocde());
+        String client = c.getNomClient() != null ? c.getNomClient().toUpperCase() : "";
+        if (num.contains(critere) || client.contains(critere)) {
+            filtered.add(c);
+        }
+    }
+    tableCommandes.setItems(filtered);
 }
 
 }

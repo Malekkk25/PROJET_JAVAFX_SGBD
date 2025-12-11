@@ -41,6 +41,9 @@ public class GestionLivraisonsController {
 @FXML private ComboBox<String> cmbModePaiement;
 private String ancienLivreurId;
 private LocalDate ancienneDate;
+@FXML private HBox tabUsers;
+@FXML private HBox tabCommandes;
+@FXML private HBox tabLivraisons;
 
     private final ObservableList<Livraison> dataLivraisons = FXCollections.observableArrayList();
     private LivraisonDAO livraisonDAO;

@@ -31,6 +31,10 @@ public class GestionUtilisateursController {
     
     @FXML private TextField telField;
     @FXML private Button enregistrerButton;
+@FXML private HBox tabUsers;
+@FXML private HBox tabCommandes;
+@FXML private HBox tabLivraisons;
+@FXML private TextField searchField;
 
     // ========== TABLEAU ==========
     @FXML private TableView<Utilisateur> usersTable;
@@ -281,17 +285,22 @@ chargerListePostes();    // remplit la ComboBox des postes
     }
 
 
-    private void chargerUtilisateurDansFormulaire(Utilisateur user) {
-        loginField.setText(user.getLogin());
-        // On empêche la modif du login car c'est souvent une clé ou un identifiant unique
-        loginField.setEditable(false); 
-        
-        motPasseField.setText(user.getMotDePasse());
-        nomField.setText(user.getNom());
-        prenomField.setText(user.getPrenom());
-        telField.setText(user.getTelephone());
-        adresseField.setText(user.getAdresse());
-        villeField.setText(user.getVille());
+private void chargerUtilisateurDansFormulaire(Utilisateur user) {
+    loginField.setText(user.getLogin());
+    loginField.setEditable(false);
+
+    try {
+        String mdp = utilisateurDAO.getMotDePasseByLogin(user.getLogin());
+        motPasseField.setText(mdp != null ? mdp : "");
+    } catch (SQLException e) {
+        motPasseField.setText("");
+    }
+
+    nomField.setText(user.getNom());
+    prenomField.setText(user.getPrenom());
+    telField.setText(user.getTelephone());
+    adresseField.setText(user.getAdresse());
+    villeField.setText(user.getVille());
 
         // ✅ SÉLECTION INTELLIGENTE DU POSTE
         // L'objet user contient juste le code (ex: "2").
@@ -527,5 +536,49 @@ chargerListePostes();    // remplit la ComboBox des postes
         }
     }
    
+private String roleUtilisateur;
+
+public void setRole(String role) {
+    this.roleUtilisateur = role;
+
+    switch (role) {
+        case "magasinier":
+            tabUsers.setVisible(false);
+            tabLivraisons.setVisible(false);
+            tabCommandes.setVisible(true);
+            break;
+
+        case "chef_livreur":
+            tabUsers.setVisible(false);
+            tabCommandes.setVisible(false);
+            tabLivraisons.setVisible(true);
+            break;
+
+        case "admin":
+            tabUsers.setVisible(true);
+            tabCommandes.setVisible(true);
+            tabLivraisons.setVisible(true);
+            break;
+    }
+}
+@FXML
+private void handleSearch() {
+    if (utilisateurDAO == null) return;
+
+    String critere = searchField.getText();
+    try {
+        if (critere == null || critere.trim().isEmpty()) {
+            // si champ vide → recharger tous les utilisateurs
+            chargerUtilisateurs();
+        } else {
+            ObservableList<Utilisateur> result =
+                    utilisateurDAO.chercherUtilisateurs(critere.trim());
+            data.setAll(result);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        afficherAlerte("Erreur recherche", e.getMessage(), Alert.AlertType.ERROR);
+    }
+}
 
 }

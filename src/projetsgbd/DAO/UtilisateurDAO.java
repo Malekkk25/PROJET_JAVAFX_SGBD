@@ -250,13 +250,11 @@ System.out.println(loginNorm +"----------"+pwdNorm);
         }
     }
      public String getCodePosteByLogin(String login) throws SQLException {
-    String sql = "SELECT CODEPOSTE FROM PERSONNEL WHERE LOGIN = ?";
-    try (PreparedStatement ps = connection.prepareStatement(sql)) {
-        ps.setString(1, login);
-        try (ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                return rs.getString("CODEPOSTE");
-            }
+    String sql = "SELECT CODEPOSTE FROM V_Mon_Profil";
+    try (Statement stmt = connection.createStatement();
+         ResultSet rs = stmt.executeQuery(sql)) {
+        if (rs.next()) {
+            return rs.getString("CODEPOSTE");
         }
     }
     return null;

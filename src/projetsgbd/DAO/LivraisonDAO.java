@@ -114,25 +114,22 @@ public boolean modifierLivraison(Livraison liv) throws SQLException {
 
 public ObservableList<String> chargerLivreurs() throws SQLException {
     ObservableList<String> livreurs = FXCollections.observableArrayList();
-
     String sql = """
         SELECT IDPERS, NOMPERS, PRENOMPERS
-        FROM PERSONNEL
-        WHERE CODEPOSTE = 4
+        FROM V_Livreurs
         ORDER BY IDPERS
     """;
-
     try (Statement stmt = connection.createStatement();
          ResultSet rs = stmt.executeQuery(sql)) {
-
         while (rs.next()) {
-            int id = rs.getInt("IDPERS");
-            String nomComplet = rs.getString("NOMPERS") + " " + rs.getString("PRENOMPERS");
-            livreurs.add(id + " - " + nomComplet);
+            livreurs.add(rs.getInt("IDPERS") + " - " +
+                         rs.getString("NOMPERS") + " " +
+                         rs.getString("PRENOMPERS"));
         }
     }
     return livreurs;
 }
+
 
 
 
