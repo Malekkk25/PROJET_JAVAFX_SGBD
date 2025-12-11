@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="root" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="projetsgbd.controllers.LoginController" 
+      styleClass="root" spacing="30" alignment="CENTER" 
+      prefWidth="420" prefHeight="520" 
+stylesheets="@style.css" ><!-- Header Logo -->
+   <VBox styleClass="logo-container" spacing="12" HBox.hgrow="NEVER">
+      <Label styleClass="logo-icon" text="✧"/>
+      <Label text="SYSTÈME DE GESTION" styleClass="title-main"/>
+      <Label text="Authentification Sécurisée" styleClass="title-sub"/>
+   </VBox>
+
+   <!-- Form Container -->
+   <VBox styleClass="card" spacing="24" HBox.hgrow="NEVER">
+      
+      <!-- Title -->
+      <Label text="Connexion" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1a202c;"/>
+      
+      <!-- Login Field -->
+      <VBox styleClass="form-field" spacing="4">
+         <HBox spacing="4" alignment="CENTER_LEFT">
+            <Label text="Login" styleClass="field-label"/>
+            <Label text="*" styleClass="field-required"/>
+         </HBox>
+         <TextField fx:id="txtLogin" styleClass="field-input" promptText="admin01" prefHeight="48"/>
+      </VBox>
+      
+      <!-- Password Field -->
+      <VBox styleClass="form-field" spacing="4">
+         <HBox spacing="4" alignment="CENTER_LEFT">
+            <Label text="Mot de passe" styleClass="field-label"/>
+            <Label text="*" styleClass="field-required"/>
+         </HBox>
+         <PasswordField fx:id="txtMdp" styleClass="field-input" promptText="••••••••" prefHeight="48"/>
+      </VBox>
+      
+      <!-- Buttons -->
+      <VBox spacing="12">
+         <Button fx:id="btnConnexion" text="SE CONNECTER" styleClass="btn-primary" onAction="#handleConnexion" prefHeight="44"/>
+         <Button text="Annuler" styleClass="btn-secondary" onAction="#handleAnnuler" prefHeight="44"/>
+      </VBox>
+      
+      <Label fx:id="lblMessage" text="" styleClass="empty-message"/>
+   </VBox>
+
+</VBox>

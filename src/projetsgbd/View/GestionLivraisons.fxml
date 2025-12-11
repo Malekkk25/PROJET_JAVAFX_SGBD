@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="projetsgbd.controllers.GestionLivraisonsController"
+            styleClass="root"
+stylesheets="@style.css"  >
+    <top>
+        <VBox spacing="0" styleClass="header-container">
+            <VBox styleClass="header-box">
+                
+                <!-- Top Bar -->
+                <HBox alignment="CENTER_LEFT" spacing="20" styleClass="top-bar">
+                    <!-- Logo + Titre -->
+                    <HBox spacing="15" alignment="CENTER_LEFT">
+                        <StackPane styleClass="logo-container">
+                            <Label text="📦" styleClass="logo-icon"/>
+                        </StackPane>
+                        <VBox spacing="2">
+                            <Label text="Système de Gestion" styleClass="title-main"/>
+                            <Label text="des Livraisons" styleClass="title-sub"/>
+                        </VBox>
+                    </HBox>
+                    
+                    <Pane HBox.hgrow="ALWAYS"/>
+                    
+                    
+                </HBox>
+
+                <Separator styleClass="header-separator"/>
+
+                <!-- Navigation Tabs -->
+                <HBox spacing="12" alignment="CENTER_LEFT" styleClass="nav-bar" >
+                    <HBox spacing="10" alignment="CENTER" styleClass="nav-tab" onMouseClicked="#versGestionUtilisateurs">
+                        <Label text="👥" styleClass="nav-icon"/>
+                        <Label text="Gestion des Utilisateurs" styleClass="nav-label"/>
+                    </HBox>
+                    
+                    
+                  
+                    
+                    <HBox spacing="10" alignment="CENTER" styleClass="nav-tab" onMouseClicked="#versGestionCommandes">
+                        <Label text="🛒" styleClass="nav-icon"/>
+                        <Label text="Gestion des Commandes" styleClass="nav-label"/>
+                    </HBox>
+                    
+                    <HBox spacing="10" alignment="CENTER" styleClass="nav-tab nav-tab-active" onMouseClicked="#versGestionLivraisons">
+                        <Label text="🚚" styleClass="nav-icon"/>
+                        <Label text="Gestion des Livraisons" styleClass="nav-label"/>
+                    </HBox>
+             </HBox>
+            </VBox>
+        </VBox>
+    </top>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="main-scroll">
+            <VBox spacing="28" styleClass="main-content">
+
+                <!-- ========== FORM CARD ========== -->
+                <VBox spacing="22" styleClass="card">
+                    
+                    <!-- Card Header -->
+                    <HBox spacing="12" alignment="CENTER_LEFT" styleClass="card-header">
+                        <StackPane styleClass="card-icon-container">
+                            <Label text="🚚" styleClass="card-icon"/>
+                        </StackPane>
+                        <VBox spacing="2">
+                            <Label text="Planifier une Livraison" styleClass="card-title"/>
+                            <Label text="Assignez un livreur et planifiez la livraison d'une commande" styleClass="card-subtitle"/>
+                        </VBox>
+                    </HBox>
+
+                    <Separator styleClass="card-separator"/>
+
+                    <!-- Form Grid -->
+                    <GridPane hgap="20" vgap="18">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="25"/>
+                            <ColumnConstraints percentWidth="25"/>
+                            <ColumnConstraints percentWidth="25"/>
+                            <ColumnConstraints percentWidth="25"/>
+                        </columnConstraints>
+
+                        <!-- Row 1 -->
+                        <VBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <HBox spacing="6" alignment="CENTER_LEFT">
+                                <Label text="N° Commande" styleClass="field-label"/>
+                                <Label text="*" styleClass="field-required"/>
+                            </HBox>
+                            <ComboBox fx:id="cmbCommande" 
+                                      maxWidth="Infinity"
+                                      promptText="ex: CMD001"
+                                      styleClass="field-input"/>
+                        </VBox>
+
+                        <VBox spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                            <Label text="Livreur" styleClass="field-label"/>
+                            <ComboBox fx:id="cmbLivreur"
+                                      maxWidth="Infinity"
+                                      promptText="Tous les livreurs"
+                                      styleClass="field-input"/>
+                        </VBox>
+
+                        <VBox spacing="10" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                            <Label text="Date" styleClass="field-label"/>
+                            <DatePicker fx:id="dpDate"
+                                       maxWidth="Infinity"
+                                       promptText="JJ/MM/AAAA"
+                                       styleClass="field-input"/>
+                        </VBox>
+
+                        <VBox spacing="10" alignment="BOTTOM_CENTER" GridPane.columnIndex="3" GridPane.rowIndex="0">
+                            <Region VBox.vgrow="ALWAYS"/>
+                            <Button text="📅  Planifier Livraison"
+                                    fx:id="btnPlanifier"
+                                    onAction="#handlePlanifier"
+                                    maxWidth="Infinity"
+                                    styleClass="btn-primary"/>
+                        </VBox>
+                        <VBox spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="1">
+    <HBox spacing="6" alignment="CENTER_LEFT">
+        <Label text="Mode Paiement" styleClass="field-label"/>
+        <Label text="*" styleClass="field-required"/>
+    </HBox>
+    <ComboBox fx:id="cmbModePaiement"
+              maxWidth="Infinity"
+              promptText="Sélectionnez un mode"
+              styleClass="field-input"/>
+</VBox>
+                    </GridPane>
+                </VBox>
+
+                <!-- ========== TABLE CARD ========== -->
+                <VBox spacing="22" styleClass="card">
+                    
+                    <!-- Card Header -->
+                    <HBox spacing="15" alignment="CENTER_LEFT" styleClass="card-header">
+                        <StackPane styleClass="card-icon-container">
+                            <Label text="📋" styleClass="card-icon"/>
+                        </StackPane>
+                        <VBox spacing="2" HBox.hgrow="ALWAYS">
+                            <Label text="Liste des Livraisons" styleClass="card-title"/>
+                            <Label text="Suivez toutes les livraisons en cours et terminées" styleClass="card-subtitle"/>
+                        </VBox>
+                        <HBox spacing="10" alignment="CENTER_RIGHT">
+                            <Label fx:id="lblLivraisonsCount" text="3 livraisons" styleClass="table-count"/>
+                        </HBox>
+                    </HBox>
+
+                    <Separator styleClass="card-separator"/>
+
+                    <!-- Table -->
+                    <TableView fx:id="tableLivraisons" 
+                               prefHeight="400"
+                               styleClass="modern-table">
+                        <columns>
+                            <TableColumn fx:id="colNumero" text="N° Commande" prefWidth="110"/>
+                            <TableColumn fx:id="colClientVille" text="Client / Ville" prefWidth="180"/>
+                            <TableColumn fx:id="colDateLivraison" text="Date Livraison" prefWidth="130"/>
+                            <TableColumn fx:id="colLivreur" text="Livreur" prefWidth="130"/>
+                            <TableColumn fx:id="colModePaiement" text="Mode Paiement" prefWidth="120"/>
+                            <TableColumn fx:id="colEtat" text="État" prefWidth="110"/>
+                            <TableColumn fx:id="colActions" text="Actions" prefWidth="120"/>
+                        </columns>
+                        <placeholder>
+                            <VBox spacing="15" alignment="CENTER" style="-fx-padding: 40;">
+                                <Label text="🚚" style="-fx-font-size: 48px; -fx-opacity: 0.3;"/>
+                                <Label text="Aucune livraison trouvée" styleClass="empty-message"/>
+                                <Label text="Planifiez votre première livraison ci-dessus" styleClass="empty-hint"/>
+                            </VBox>
+                        </placeholder>
+                    </TableView>
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>
