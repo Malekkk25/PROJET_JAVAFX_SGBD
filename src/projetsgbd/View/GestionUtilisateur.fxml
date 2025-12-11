@@ -197,13 +197,13 @@
 
                     <!-- Table -->
                     <!-- Barre de recherche -->
- <!--  <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 0 0 10 0;">
+ <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 0 0 10 0;">
     <Label text="Rechercher :" styleClass="field-label"/>
     <TextField fx:id="searchField"
                promptText="Nom ou login..."
                styleClass="field-input"
                onKeyReleased="#handleSearch"/>
-</HBox>-->
+</HBox>
 
                     <TableView fx:id="usersTable" 
                                prefHeight="420"

@@ -57,13 +57,12 @@ public boolean modifierLivraison(Livraison liv) throws SQLException {
         }
     }
 
-   public ObservableList<Livraison> chargerToutesLivraisons() throws SQLException {
+  public ObservableList<Livraison> chargerToutesLivraisons() throws SQLException {
     ObservableList<Livraison> list = FXCollections.observableArrayList();
 
-   
     try (CallableStatement cstmt = connection.prepareCall(
-    "{ ? = call PROJETSGBD.PKG_LIVRAISONS.ChercherLivraison(?, ?, ?, ?) }");
-) {
+            "{ ? = call PROJETSGBD.PKG_LIVRAISONS.ChercherLivraison(?, ?, ?, ?) }")) {
+
         cstmt.registerOutParameter(1, OracleTypes.CURSOR);
         cstmt.setNull(2, Types.INTEGER); // pnocde
         cstmt.setNull(3, Types.INTEGER); // plivreur
@@ -77,12 +76,10 @@ public boolean modifierLivraison(Livraison liv) throws SQLException {
                 l.setNocde(rs.getInt("NOCDE"));
                 l.setVilleClient(rs.getString("VILLECLT"));
                 l.setDateLiv(rs.getDate("DATELIV"));
-
-                // IMPORTANT : le package renvoie LIVREUR (id), pas LIVREUR_NOM
                 l.setLivreur(rs.getString("LIVREUR"));
-
                 l.setModePay(rs.getString("MODEPAY"));
-                l.setEtatLiv(rs.getString("ETATLIV"));
+                // ⚠️ ici il faut ETAT, pas ETATLIV
+                l.setEtatLiv(rs.getString("ETAT"));
                 list.add(l);
             }
         }
@@ -90,13 +87,14 @@ public boolean modifierLivraison(Livraison liv) throws SQLException {
     return list;
 }
 
+
     // Commandes éligibles
     public ObservableList<String> chargerCommandesEligibles() throws SQLException {
         ObservableList<String> commandes = FXCollections.observableArrayList();
         String sql = """
                 SELECT NOCDE, DATECDE 
                 FROM COMMANDES 
-                WHERE ETATCDE IN ('Pr', 'EC')
+                WHERE ETATCDE IN ('PR', 'EC')
                   AND NOCDE NOT IN (SELECT NOCDE FROM LIVRAISONCOM)
                 ORDER BY NOCDE DESC
                 """;

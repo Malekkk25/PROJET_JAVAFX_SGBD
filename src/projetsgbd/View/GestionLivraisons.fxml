@@ -161,7 +161,13 @@ stylesheets="@style.css"  >
                     </HBox>
 
                     <Separator styleClass="card-separator"/>
-
+<HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 0 0 10 0;">
+    <Label text="Rechercher :" styleClass="field-label"/>
+    <TextField fx:id="searchField"
+               promptText="N° commande ou client..."
+               styleClass="field-input"
+               onKeyReleased="#handleSearch"/>
+</HBox>
                     <!-- Table -->
                     <TableView fx:id="tableLivraisons" 
                                prefHeight="400"
@@ -173,7 +179,7 @@ stylesheets="@style.css"  >
                             <TableColumn fx:id="colLivreur" text="Livreur" prefWidth="130"/>
                             <TableColumn fx:id="colModePaiement" text="Mode Paiement" prefWidth="120"/>
                             <TableColumn fx:id="colEtat" text="État" prefWidth="110"/>
-                            <TableColumn fx:id="colActions" text="Actions" prefWidth="120"/>
+                            <TableColumn fx:id="colActions" text="Actions" prefWidth="300"/>
                         </columns>
                         <placeholder>
                             <VBox spacing="15" alignment="CENTER" style="-fx-padding: 40;">

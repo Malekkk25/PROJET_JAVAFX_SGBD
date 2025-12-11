@@ -19,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import projetsgbd.DAO.UtilisateurDAO;
+import projetsgbd.Model.Utilisateur;
 
 public class GestionLivraisonsController {
 
@@ -44,7 +45,8 @@ private LocalDate ancienneDate;
 @FXML private HBox tabUsers;
 @FXML private HBox tabCommandes;
 @FXML private HBox tabLivraisons;
-
+@FXML
+private TextField searchField;
     private final ObservableList<Livraison> dataLivraisons = FXCollections.observableArrayList();
     private LivraisonDAO livraisonDAO;
     private boolean modeModification = false;
@@ -379,5 +381,35 @@ private void versGestionUtilisateurs(MouseEvent event) {
         afficherAlerte("Erreur Navigation", "Erreur Utilisateur : " + e.getMessage(), Alert.AlertType.ERROR);
     }
 }
+@FXML
+private void handleSearch() {
+    String critere = (searchField.getText() == null)
+            ? ""
+            : searchField.getText().trim().toUpperCase();
 
+    if (critere.isEmpty()) {
+        // recharger toutes les livraisons depuis la BD
+        refreshAllData();              // ou chargerTableauLivraisons();
+        return;
+    }
+
+    ObservableList<Livraison> filtered = FXCollections.observableArrayList();
+
+    for (Livraison l : dataLivraisons) {
+        String num    = String.valueOf(l.getNocde());
+        String livreur = l.getLivreur()      != null ? l.getLivreur().toUpperCase()      : "";
+        String ville   = l.getVilleClient()  != null ? l.getVilleClient().toUpperCase()  : "";
+        String dateStr = (l.getDateLiv()     != null ? l.getDateLiv().toString() : "").toUpperCase();
+
+        if (num.contains(critere)
+                || livreur.contains(critere)
+                || ville.contains(critere)
+                || dateStr.contains(critere)) {
+            filtered.add(l);
+        }
+    }
+
+    tableLivraisons.setItems(filtered);
+    lblLivraisonsCount.setText(filtered.size() + " livraisons");
+}
 }
